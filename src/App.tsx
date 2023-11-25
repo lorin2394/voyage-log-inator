@@ -1,8 +1,22 @@
 import React from 'react';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { app } from './firebase';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  async function fetchData() {
+    const firestore = getFirestore(app);
+    const dataCollection = collection(firestore, 'data');
+    const dataSnapshot = await getDocs(dataCollection);
+    
+    dataSnapshot.forEach((doc: any) => {
+      console.log(doc.data());
+    });
+  }
+
+  fetchData();
+
   return (
     <div className="App">
       <header className="App-header">
